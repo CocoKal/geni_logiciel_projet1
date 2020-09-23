@@ -2,10 +2,14 @@ package geni_logiciel_projet1;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
 public class PanelWindow extends JFrame {
+
+    JLabel label_current_floor = new JLabel("0");
 
     PanelWindow(){
         super();
@@ -25,7 +29,6 @@ public class PanelWindow extends JFrame {
 
         /*Setup de tous les composants*/
             //Display
-        JLabel label_current_floor = new JLabel("0");
         label_current_floor.setFont(new Font("Verdana", Font.PLAIN, 50));
         JLabel label_current_move = new JLabel("Waiting");
 
@@ -49,7 +52,19 @@ public class PanelWindow extends JFrame {
 
         /*Ajout des ActionListener*/
 
-            //TODO
+        button_1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton source = (JButton) e.getSource();
+                App.addDestination(Integer.parseInt(source.getText()));
+            }
+        });
+        button_6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                App.addDestination(6);
+            }
+        });
 
         /*Mise en layout des composants*/
 
@@ -115,5 +130,9 @@ public class PanelWindow extends JFrame {
         /*Ajout du panel general à la fenetre*/
         add(main_panel);
 
+    }
+
+    public void updateLabel(String newString) {
+        label_current_floor.setText(newString);
     }
 }

@@ -15,6 +15,10 @@ public class Elevator extends TimerTask {
         this.destinationsList = new LinkedList<>();
     }
 
+    public int getCurrent_level() {
+        return current_level;
+    }
+
     public void run(){
         if(!this.destinationsList.isEmpty()) {
             if (this.current_level < this.destinationsList.getFirst())
