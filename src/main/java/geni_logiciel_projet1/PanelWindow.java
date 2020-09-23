@@ -10,6 +10,7 @@ class PanelWindow extends JFrame {
 
     private JLabel label_current_floor = new JLabel("0");
     private JLabel label_current_move = new JLabel("Waiting");
+    private JSpinner spinner;
 
     PanelWindow(){
         super();
@@ -46,7 +47,7 @@ class PanelWindow extends JFrame {
             //Externs commands
         //JLabel label_extern = new JLabel("Commandes externes");
         SpinnerNumberModel model1 = new SpinnerNumberModel(0, 0, 6, 1);
-        JSpinner spinner = new JSpinner(model1);
+        spinner = new JSpinner(model1);
         JButton button_up = new JButton("UP");
         JButton button_down = new JButton("DOWN");
 
@@ -60,7 +61,8 @@ class PanelWindow extends JFrame {
         button_5.addActionListener(listenerForButtonFloor());
         button_6.addActionListener(listenerForButtonFloor());
             //Commandes externes
-
+        button_up.addActionListener(listenerForExternCommand());
+        button_down.addActionListener(listenerForExternCommand());
 
         /*Mise en layout des composants*/
 
@@ -159,6 +161,13 @@ class PanelWindow extends JFrame {
         return e -> {
             JButton source = (JButton) e.getSource();
             App.addDestination(Integer.parseInt(source.getText()));
+        };
+    }
+
+    private ActionListener listenerForExternCommand() {
+        return e -> {
+            int value = (int) spinner.getValue();
+            if (value < 7 && value > -1) App.addDestination(value);
         };
     }
 }
