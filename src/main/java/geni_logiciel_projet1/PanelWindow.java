@@ -2,15 +2,14 @@ package geni_logiciel_projet1;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
-public class PanelWindow extends JFrame {
+class PanelWindow extends JFrame {
 
-    JLabel label_current_floor = new JLabel("0");
-    JLabel label_current_move = new JLabel("Waiting");
+    private JLabel label_current_floor = new JLabel("0");
+    private JLabel label_current_move = new JLabel("Waiting");
 
     PanelWindow(){
         super();
@@ -129,15 +128,15 @@ public class PanelWindow extends JFrame {
 
     }
 
-    public void updateLabel(JLabel label, String newString){
+    private void updateLabel(JLabel label, String newString){
         label.setText(newString);
     }
 
-    public void updateLabelFloor(String newString) {
+    void updateLabelFloor(String newString) {
         updateLabel(label_current_floor, newString);
     }
 
-    public void updateLabelState(int state) {
+    void updateLabelState(int state) {
 
         switch (state) {
             case Constante.State.GO_DOWN:
@@ -156,13 +155,10 @@ public class PanelWindow extends JFrame {
 
     }
 
-    public ActionListener listenerForButtonFloor() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JButton source = (JButton) e.getSource();
-                App.addDestination(Integer.parseInt(source.getText()));
-            }
+    private ActionListener listenerForButtonFloor() {
+        return e -> {
+            JButton source = (JButton) e.getSource();
+            App.addDestination(Integer.parseInt(source.getText()));
         };
     }
 }

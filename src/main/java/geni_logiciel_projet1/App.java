@@ -6,21 +6,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.*;
 
-import javax.swing.*;
-
 public class App {
 
-    final static Elevator elevator = new Elevator();
-    final static PanelWindow window = new PanelWindow();
+    private final static Elevator elevator = new Elevator();
+    private final static PanelWindow window = new PanelWindow();
 
     public static void main(String[] args) {
 
         //Appelle de la fenêtre
-        SwingUtilities.invokeLater(new Runnable(){
-            public void run(){
-                window.setVisible(true);
-            }
-        });
+        SwingUtilities.invokeLater(() -> window.setVisible(true));
 
         TimerTask task = new TimerTask() {
             public void run() {
@@ -35,15 +29,15 @@ public class App {
         timer.schedule(task, 1000,1000);
     }
 
-    final static void addDestination(int destination) {
+    static void addDestination(int destination) {
         elevator.addDestination(destination);
     }
 
-    final static void updateLabelFloor(String newString) {
+    private static void updateLabelFloor(String newString) {
         window.updateLabelFloor(newString);
     }
 
-    final static void updateLabelState(int state) {
+    static void updateLabelState(int state) {
         window.updateLabelState(state);
     }
 }
