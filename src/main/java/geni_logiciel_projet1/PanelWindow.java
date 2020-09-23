@@ -3,6 +3,8 @@ package geni_logiciel_projet1;
 import javax.swing.*;
 import java.awt.*;
 
+import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
+
 public class PanelWindow extends JFrame {
 
     PanelWindow(){
@@ -12,7 +14,7 @@ public class PanelWindow extends JFrame {
 
     private void build(){
         setTitle("Elevator Panel");
-        setSize(300,500);
+        setSize(300,450);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,10 +24,13 @@ public class PanelWindow extends JFrame {
     private void buildContentPane() {
 
         /*Setup de tous les composants*/
-
+            //Display
         JLabel label_current_floor = new JLabel("0");
-        JLabel label_current_move = new JLabel(" ");
+        label_current_floor.setFont(new Font("Verdana", Font.PLAIN, 50));
+        JLabel label_current_move = new JLabel("Waiting");
 
+            //Intern commands
+        //JLabel label_intern = new JLabel("Commandes internes");
         JButton button_1 = new JButton("1");
         JButton button_2 = new JButton("2");
         JButton button_3 = new JButton("3");
@@ -35,9 +40,10 @@ public class PanelWindow extends JFrame {
         JButton button_rc = new JButton("RC");
         JButton button_au = new JButton("AU");
 
+            //Externs commands
+        //JLabel label_extern = new JLabel("Commandes externes");
         SpinnerNumberModel model1 = new SpinnerNumberModel(0, 0, 6, 1);
         JSpinner spinner = new JSpinner(model1);
-
         JButton button_up = new JButton("UP");
         JButton button_down = new JButton("DOWN");
 
@@ -57,6 +63,7 @@ public class PanelWindow extends JFrame {
         panel_display.add(label_current_move);
 
             //Panel de commande interne
+
                 //Initialisation layout et panel
         GridLayout layout_commande_intern = new GridLayout(3,3);
         JPanel panel_command_intern = new JPanel();
@@ -91,18 +98,21 @@ public class PanelWindow extends JFrame {
                 main_layout.createSequentialGroup()
                     .addGroup(main_layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(panel_display)
-                            .addComponent(panel_command_intern)
+                            .addComponent(panel_command_intern, 0 , 250, 300)
                             .addComponent(panel_command_extern)
                     )
         );
 
         main_layout.setVerticalGroup(
                 main_layout.createSequentialGroup()
-                    .addComponent(panel_display)
-                    .addComponent(panel_command_intern)
-                    .addComponent(panel_command_extern)
+                    .addComponent(panel_display, 0 , 50, 75)
+                    .addComponent(panel_command_intern, 0 , 200, 250)
+                        .addPreferredGap(RELATED,
+                                GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_command_extern, 0 , 30, 50)
         );
 
+        /*Ajout du panel general à la fenetre*/
         add(main_panel);
 
     }
