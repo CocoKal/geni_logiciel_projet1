@@ -6,11 +6,21 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.*;
 
+import javax.swing.*;
+
 public class App {
 
     public static void main(String[] args) {
 
-        Elevator elevator = new Elevator();
+        //Appelle de la fenêtre
+        SwingUtilities.invokeLater(new Runnable(){
+            public void run(){
+                PanelWindow window = new PanelWindow();
+                window.setVisible(true);
+            }
+        });
+      
+        /* Elevator elevator = new Elevator();
 
         TimerTask task = new TimerTask() {
             public void run() {
@@ -18,8 +28,7 @@ public class App {
             }
         };
         Timer timer = new Timer();
-        timer.schedule(task, 1000,1000);
-
+        timer.schedule(task, 1000,1000); */
     }
 }
 
