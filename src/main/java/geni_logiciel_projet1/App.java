@@ -10,25 +10,34 @@ import javax.swing.*;
 
 public class App {
 
+    final static Elevator elevator = new Elevator();
+    final static PanelWindow window = new PanelWindow();
+
     public static void main(String[] args) {
 
         //Appelle de la fenêtre
         SwingUtilities.invokeLater(new Runnable(){
             public void run(){
-                PanelWindow window = new PanelWindow();
                 window.setVisible(true);
             }
         });
-      
-        /* Elevator elevator = new Elevator();
 
         TimerTask task = new TimerTask() {
             public void run() {
                 elevator.run();
+                updateLabel(String.valueOf(elevator.getCurrent_level()));
             }
         };
         Timer timer = new Timer();
-        timer.schedule(task, 1000,1000); */
+        timer.schedule(task, 1000,1000);
+    }
+
+    final static void addDestination(int destination) {
+        elevator.addDestination(destination);
+    }
+
+    final static void updateLabel(String newString) {
+        window.updateLabel(newString);
     }
 }
 
