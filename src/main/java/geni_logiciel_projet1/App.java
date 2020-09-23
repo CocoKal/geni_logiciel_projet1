@@ -6,38 +6,39 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.*;
 
-import javax.swing.*;
-
 public class App {
 
-    final static Elevator elevator = new Elevator();
-    final static PanelWindow window = new PanelWindow();
+    private final static Elevator elevator = new Elevator();
+    private final static PanelWindow window = new PanelWindow();
 
     public static void main(String[] args) {
 
         //Appelle de la fenêtre
-        SwingUtilities.invokeLater(new Runnable(){
-            public void run(){
-                window.setVisible(true);
-            }
-        });
+        SwingUtilities.invokeLater(() -> window.setVisible(true));
 
         TimerTask task = new TimerTask() {
             public void run() {
-                elevator.run();
-                updateLabel(String.valueOf(elevator.getCurrent_level()));
+                if (!elevator.destination_listIsEmpty()) {
+                    elevator.run();
+                    updateLabelFloor(String.valueOf(elevator.getCurrent_level()));
+                }
+                else elevator.updateState(Constante.State.WAITING);
             }
         };
         Timer timer = new Timer();
         timer.schedule(task, 1000,1000);
     }
 
-    final static void addDestination(int destination) {
+    static void addDestination(int destination) {
         elevator.addDestination(destination);
     }
 
-    final static void updateLabel(String newString) {
-        window.updateLabel(newString);
+    private static void updateLabelFloor(String newString) {
+        window.updateLabelFloor(newString);
+    }
+
+    static void updateLabelState(int state) {
+        window.updateLabelState(state);
     }
 }
 

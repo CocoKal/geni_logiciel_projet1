@@ -2,14 +2,15 @@ package geni_logiciel_projet1;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
-public class PanelWindow extends JFrame {
+class PanelWindow extends JFrame {
 
-    JLabel label_current_floor = new JLabel("0");
+    private JLabel label_current_floor = new JLabel("0");
+    private JLabel label_current_move = new JLabel("Waiting");
+    private JSpinner spinner;
 
     PanelWindow(){
         super();
@@ -30,7 +31,7 @@ public class PanelWindow extends JFrame {
         /*Setup de tous les composants*/
             //Display
         label_current_floor.setFont(new Font("Verdana", Font.PLAIN, 50));
-        JLabel label_current_move = new JLabel("Waiting");
+        label_current_move = new JLabel("WAITING");
 
             //Intern commands
         //JLabel label_intern = new JLabel("Commandes internes");
@@ -40,31 +41,28 @@ public class PanelWindow extends JFrame {
         JButton button_4 = new JButton("4");
         JButton button_5 = new JButton("5");
         JButton button_6 = new JButton("6");
-        JButton button_rc = new JButton("RC");
+        JButton button_rc = new JButton("0");
         JButton button_au = new JButton("AU");
 
             //Externs commands
         //JLabel label_extern = new JLabel("Commandes externes");
         SpinnerNumberModel model1 = new SpinnerNumberModel(0, 0, 6, 1);
-        JSpinner spinner = new JSpinner(model1);
+        spinner = new JSpinner(model1);
         JButton button_up = new JButton("UP");
         JButton button_down = new JButton("DOWN");
 
         /*Ajout des ActionListener*/
-
-        button_1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JButton source = (JButton) e.getSource();
-                App.addDestination(Integer.parseInt(source.getText()));
-            }
-        });
-        button_6.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                App.addDestination(6);
-            }
-        });
+            //Commandes internes
+        button_rc.addActionListener(listenerForButtonFloor());
+        button_1.addActionListener(listenerForButtonFloor());
+        button_2.addActionListener(listenerForButtonFloor());
+        button_3.addActionListener(listenerForButtonFloor());
+        button_4.addActionListener(listenerForButtonFloor());
+        button_5.addActionListener(listenerForButtonFloor());
+        button_6.addActionListener(listenerForButtonFloor());
+            //Commandes externes
+        button_up.addActionListener(listenerForExternCommand());
+        button_down.addActionListener(listenerForExternCommand());
 
         /*Mise en layout des composants*/
 
@@ -132,7 +130,44 @@ public class PanelWindow extends JFrame {
 
     }
 
-    public void updateLabel(String newString) {
-        label_current_floor.setText(newString);
+    private void updateLabel(JLabel label, String newString){
+        label.setText(newString);
+    }
+
+    void updateLabelFloor(String newString) {
+        updateLabel(label_current_floor, newString);
+    }
+
+    void updateLabelState(int state) {
+
+        switch (state) {
+            case Constante.State.GO_DOWN:
+                updateLabel(label_current_move,"DOWN");
+                break;
+            case Constante.State.GO_UP:
+                updateLabel(label_current_move,"UP");
+                break;
+            case Constante.State.UNLOADING:
+                updateLabel(label_current_move,"UNLOADING");
+                break;
+            case Constante.State.WAITING:
+                updateLabel(label_current_move,"WAITING");
+                break;
+        }
+
+    }
+
+    private ActionListener listenerForButtonFloor() {
+        return e -> {
+            JButton source = (JButton) e.getSource();
+            App.addDestination(Integer.parseInt(source.getText()));
+        };
+    }
+
+    private ActionListener listenerForExternCommand() {
+        return e -> {
+            int value = (int) spinner.getValue();
+            if (value < 7 && value > -1) App.addDestination(value);
+        };
     }
 }
