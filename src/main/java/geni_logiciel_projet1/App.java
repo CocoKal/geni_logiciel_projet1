@@ -3,12 +3,18 @@
  */
 package geni_logiciel_projet1;
 
+import javax.swing.*;
+
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+
+        //Appelle de la fenêtre
+        SwingUtilities.invokeLater(new Runnable(){
+            public void run(){
+                PanelWindow window = new PanelWindow();
+                window.setVisible(true);
+            }
+        });
     }
 }
