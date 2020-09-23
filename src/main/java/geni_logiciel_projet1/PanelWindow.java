@@ -10,6 +10,7 @@ import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 public class PanelWindow extends JFrame {
 
     JLabel label_current_floor = new JLabel("0");
+    JLabel label_current_move = new JLabel("Waiting");
 
     PanelWindow(){
         super();
@@ -30,7 +31,7 @@ public class PanelWindow extends JFrame {
         /*Setup de tous les composants*/
             //Display
         label_current_floor.setFont(new Font("Verdana", Font.PLAIN, 50));
-        JLabel label_current_move = new JLabel("Waiting");
+        label_current_move = new JLabel("WAITING");
 
             //Intern commands
         //JLabel label_intern = new JLabel("Commandes internes");
@@ -40,7 +41,7 @@ public class PanelWindow extends JFrame {
         JButton button_4 = new JButton("4");
         JButton button_5 = new JButton("5");
         JButton button_6 = new JButton("6");
-        JButton button_rc = new JButton("RC");
+        JButton button_rc = new JButton("0");
         JButton button_au = new JButton("AU");
 
             //Externs commands
@@ -51,20 +52,16 @@ public class PanelWindow extends JFrame {
         JButton button_down = new JButton("DOWN");
 
         /*Ajout des ActionListener*/
+            //Commandes internes
+        button_rc.addActionListener(listenerForButtonFloor());
+        button_1.addActionListener(listenerForButtonFloor());
+        button_2.addActionListener(listenerForButtonFloor());
+        button_3.addActionListener(listenerForButtonFloor());
+        button_4.addActionListener(listenerForButtonFloor());
+        button_5.addActionListener(listenerForButtonFloor());
+        button_6.addActionListener(listenerForButtonFloor());
+            //Commandes externes
 
-        button_1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JButton source = (JButton) e.getSource();
-                App.addDestination(Integer.parseInt(source.getText()));
-            }
-        });
-        button_6.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                App.addDestination(6);
-            }
-        });
 
         /*Mise en layout des composants*/
 
@@ -132,7 +129,40 @@ public class PanelWindow extends JFrame {
 
     }
 
-    public void updateLabel(String newString) {
-        label_current_floor.setText(newString);
+    public void updateLabel(JLabel label, String newString){
+        label.setText(newString);
+    }
+
+    public void updateLabelFloor(String newString) {
+        updateLabel(label_current_floor, newString);
+    }
+
+    public void updateLabelState(int state) {
+
+        switch (state) {
+            case Constante.State.GO_DOWN:
+                updateLabel(label_current_move,"DOWN");
+                break;
+            case Constante.State.GO_UP:
+                updateLabel(label_current_move,"UP");
+                break;
+            case Constante.State.UNLOADING:
+                updateLabel(label_current_move,"UNLOADING");
+                break;
+            case Constante.State.WAITING:
+                updateLabel(label_current_move,"WAITING");
+                break;
+        }
+
+    }
+
+    public ActionListener listenerForButtonFloor() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton source = (JButton) e.getSource();
+                App.addDestination(Integer.parseInt(source.getText()));
+            }
+        };
     }
 }

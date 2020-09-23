@@ -24,8 +24,11 @@ public class App {
 
         TimerTask task = new TimerTask() {
             public void run() {
-                elevator.run();
-                updateLabel(String.valueOf(elevator.getCurrent_level()));
+                if (!elevator.destination_listIsEmpty()) {
+                    elevator.run();
+                    updateLabelFloor(String.valueOf(elevator.getCurrent_level()));
+                }
+                else elevator.updateState(Constante.State.WAITING);
             }
         };
         Timer timer = new Timer();
@@ -36,8 +39,12 @@ public class App {
         elevator.addDestination(destination);
     }
 
-    final static void updateLabel(String newString) {
-        window.updateLabel(newString);
+    final static void updateLabelFloor(String newString) {
+        window.updateLabelFloor(newString);
+    }
+
+    final static void updateLabelState(int state) {
+        window.updateLabelState(state);
     }
 }
 
