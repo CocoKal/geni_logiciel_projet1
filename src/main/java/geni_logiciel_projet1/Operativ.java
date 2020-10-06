@@ -1,16 +1,14 @@
 package geni_logiciel_projet1;
 
-import com.sun.jdi.ThreadReference;
-
-public class Operativ extends Thread{
+public class Operativ extends Thread {
 
     private int min, max, current_action;
-    private Cab cab;
+    private Cabin cab;
 
     public Operativ(int min, int max, int base_floor) {
         this.min = min;
         this.max = max;
-        cab = new Cab(base_floor);
+        cab = new Cabin(base_floor);
         current_action = Constante.State.WAITING;
     }
 
