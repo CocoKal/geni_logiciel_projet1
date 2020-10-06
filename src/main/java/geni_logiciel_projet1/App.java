@@ -20,16 +20,46 @@ public abstract class App {
         SwingUtilities.invokeLater(() -> window.setVisible(true));
     }
 
+    static void addDestination(Destination destination) {
+        command_control.addDestination(destination);
+    }
+
     static void addDestination(int destination) {
-
+        command_control.addDestination(destination);
     }
 
-    private static void updateLabelFloor(String newString) {
-        window.updateLabelFloor(newString);
+    static void updateActionOperativ (int action) {
+        operativ.updateAction(action);
     }
 
-    static void updateLabelState(int state) {
+    static void stopNext() {
+        operativ.setStop_nextTrue();
+    }
+
+    static void updateStateCommand (int state) {
+        command_control.setState(state);
+    }
+
+    static void updateFloorCommand (int floor) {
+        command_control.setCurrent_floor(floor);
+    }
+
+    static void updateStatePanel (int state) {
         window.updateLabelState(state);
+    }
+
+    static void updateFloorPanel (int floor) {
+        window.updateLabelFloor(floor);
+    }
+
+    static void updateFloor (int floor) {
+        updateFloorCommand(floor);
+        updateFloorPanel(floor);
+    }
+
+    static void updateState (int state) {
+        updateStateCommand(state);
+        updateStatePanel(state);
     }
 }
 

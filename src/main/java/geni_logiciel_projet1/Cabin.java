@@ -1,10 +1,10 @@
 package geni_logiciel_projet1;
 
-public class Cab {
+public class Cabin {
 
     private int current_floor;
 
-    public Cab(int base_floor) {
+    public Cabin(int base_floor) {
         current_floor = base_floor;
     }
 
