@@ -5,6 +5,7 @@ class Constante {
         final static int GO_UP = 1;
         final static int GO_DOWN = -1;
         final static int STOP_NEXT = 0;
+        final static int EMERGENCY_STOP = 2;
     }
     class State {
         final static int WAITING = 0;
