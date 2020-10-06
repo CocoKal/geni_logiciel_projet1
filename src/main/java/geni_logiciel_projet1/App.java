@@ -6,31 +6,22 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.*;
 
-public class App {
+public abstract class App {
 
-    private final static Elevator elevator = new Elevator();
+    private final static Operativ operativ = new Operativ(0, 6, 0);
+    private final static CommandControl command_control = new CommandControl();
     private final static PanelWindow window = new PanelWindow();
 
     public static void main(String[] args) {
+        //Démarrage de la partie opérative
+        operativ.start();
 
         //Appelle de la fenêtre
         SwingUtilities.invokeLater(() -> window.setVisible(true));
-
-        TimerTask task = new TimerTask() {
-            public void run() {
-                if (!elevator.destination_listIsEmpty()) {
-                    elevator.run();
-                    updateLabelFloor(String.valueOf(elevator.getCurrent_level()));
-                }
-                else elevator.updateState(Constante.State.WAITING);
-            }
-        };
-        Timer timer = new Timer();
-        timer.schedule(task, 1000,1000);
     }
 
     static void addDestination(int destination) {
-        elevator.addDestination(destination);
+
     }
 
     private static void updateLabelFloor(String newString) {
