@@ -28,21 +28,38 @@ public abstract class App {
         command_control.addDestination(destination);
     }
 
-    static void updateCurrentFloor (int current_floor) {
-        updateCommandControlFloor(current_floor);
-        updateLabelFloor(current_floor);
+    static void updateActionOperativ (int action) {
+        operativ.updateAction(action);
     }
 
-    private static void updateLabelFloor(int current_floor) {
-        window.updateLabelFloor(String.valueOf(current_floor));
+    static void stopNext() {
+        operativ.setStop_nextTrue();
     }
 
-    private static void updateCommandControlFloor(int current_floor) {
-        command_control.setCurrent_floor(current_floor);
+    static void updateStateCommand (int state) {
+        command_control.setState(state);
     }
 
-    static void updateLabelState(int state) {
+    static void updateFloorCommand (int floor) {
+        command_control.setCurrent_floor(floor);
+    }
+
+    static void updateStatePanel (int state) {
         window.updateLabelState(state);
+    }
+
+    static void updateFloorPanel (int floor) {
+        window.updateLabelFloor(floor);
+    }
+
+    static void updateFloor (int floor) {
+        updateFloorCommand(floor);
+        updateFloorPanel(floor);
+    }
+
+    static void updateState (int state) {
+        updateStateCommand(state);
+        updateStatePanel(state);
     }
 }
 

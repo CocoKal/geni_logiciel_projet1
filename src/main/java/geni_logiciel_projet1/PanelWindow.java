@@ -9,7 +9,7 @@ import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 class PanelWindow extends JFrame {
 
     private JLabel label_current_floor = new JLabel("0");
-    private JLabel label_current_move = new JLabel("Waiting");
+    private JLabel label_current_state = new JLabel("Waiting");
     private JSpinner spinner;
 
     PanelWindow(){
@@ -31,7 +31,7 @@ class PanelWindow extends JFrame {
         /*Setup de tous les composants*/
             //Display
         label_current_floor.setFont(new Font("Verdana", Font.PLAIN, 50));
-        label_current_move = new JLabel("WAITING");
+        label_current_state = new JLabel("WAITING");
 
             //Intern commands
         //JLabel label_intern = new JLabel("Commandes internes");
@@ -74,7 +74,7 @@ class PanelWindow extends JFrame {
         panel_display.setLayout(layout_display);
                 //Ajout des composants au panel
         panel_display.add(label_current_floor);
-        panel_display.add(label_current_move);
+        panel_display.add(label_current_state);
 
             //Panel de commande interne
 
@@ -135,24 +135,21 @@ class PanelWindow extends JFrame {
         label.setText(newString);
     }
 
-    void updateLabelFloor(String newString) {
-        updateLabel(label_current_floor, newString);
+    void updateLabelFloor(int newString) {
+        updateLabel(label_current_floor, String.valueOf(newString));
     }
 
     void updateLabelState(int state) {
 
         switch (state) {
-            case Constante.State.GO_DOWN:
-                updateLabel(label_current_move,"DOWN");
-                break;
-            case Constante.State.GO_UP:
-                updateLabel(label_current_move,"UP");
+            case Constante.State.MOVING:
+                updateLabel(label_current_state,"MOVING");
                 break;
             case Constante.State.UNLOADING:
-                updateLabel(label_current_move,"UNLOADING");
+                updateLabel(label_current_state,"UNLOADING");
                 break;
             case Constante.State.WAITING:
-                updateLabel(label_current_move,"WAITING");
+                updateLabel(label_current_state,"WAITING");
                 break;
         }
 

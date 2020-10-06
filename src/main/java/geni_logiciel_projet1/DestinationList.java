@@ -18,6 +18,14 @@ public class DestinationList {
         return destinations_list.getFirst();
     }
 
+    public void removeFirst() {
+        destinations_list.removeFirst();
+    }
+
+    public boolean isEmpty() {
+        return destinations_list.isEmpty();
+    }
+
     public void addDestination(Destination destination) {
         destinations_list.add(destination);
     }
