@@ -20,12 +20,25 @@ public abstract class App {
         SwingUtilities.invokeLater(() -> window.setVisible(true));
     }
 
-    static void addDestination(int destination) {
-
+    static void addDestination(Destination destination) {
+        command_control.addDestination(destination);
     }
 
-    private static void updateLabelFloor(String newString) {
-        window.updateLabelFloor(newString);
+    static void addDestination(int destination) {
+        command_control.addDestination(destination);
+    }
+
+    static void updateCurrentFloor (int current_floor) {
+        updateCommandControlFloor(current_floor);
+        updateLabelFloor(current_floor);
+    }
+
+    private static void updateLabelFloor(int current_floor) {
+        window.updateLabelFloor(String.valueOf(current_floor));
+    }
+
+    private static void updateCommandControlFloor(int current_floor) {
+        command_control.setCurrent_floor(current_floor);
     }
 
     static void updateLabelState(int state) {

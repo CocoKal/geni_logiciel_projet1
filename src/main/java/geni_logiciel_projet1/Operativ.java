@@ -41,7 +41,7 @@ public class Operativ extends Thread {
     }
 
     private void notifyUpdateFloor() {
-
+        App.updateCurrentFloor(getCurrent_floor());
     }
 
     public int getCurrent_floor() {

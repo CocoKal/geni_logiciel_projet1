@@ -61,8 +61,8 @@ class PanelWindow extends JFrame {
         button_5.addActionListener(listenerForButtonFloor());
         button_6.addActionListener(listenerForButtonFloor());
             //Commandes externes
-        button_up.addActionListener(listenerForExternCommand());
-        button_down.addActionListener(listenerForExternCommand());
+        button_up.addActionListener(listenerForExternCommandUp());
+        button_down.addActionListener(listenerForExternCommandDown());
 
 
         /*Mise en layout des composants*/
@@ -165,10 +165,19 @@ class PanelWindow extends JFrame {
         };
     }
 
-    private ActionListener listenerForExternCommand() {
+    private ActionListener listenerForExternCommandUp() {
         return e -> {
             int value = (int) spinner.getValue();
-            if (value < 7 && value > -1) App.addDestination(value);
+            Destination destination = new Destination(value, Constante.Actions.GO_DOWN);
+            if (value < 7 && value > -1) App.addDestination(destination);
+        };
+    }
+
+    private ActionListener listenerForExternCommandDown() {
+        return e -> {
+            int value = (int) spinner.getValue();
+            Destination destination = new Destination(value, Constante.Actions.GO_DOWN);
+            if (value < 7 && value > -1) App.addDestination(destination);
         };
     }
 }
