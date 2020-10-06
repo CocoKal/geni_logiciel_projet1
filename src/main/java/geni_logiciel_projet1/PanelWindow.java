@@ -64,6 +64,7 @@ class PanelWindow extends JFrame {
         button_up.addActionListener(listenerForExternCommand());
         button_down.addActionListener(listenerForExternCommand());
 
+
         /*Mise en layout des composants*/
 
             //Panel d'affichage étage+mouvement
