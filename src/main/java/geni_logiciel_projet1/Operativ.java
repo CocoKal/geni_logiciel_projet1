@@ -15,15 +15,21 @@ public class Operativ extends Thread {
         state = Constante.State.WAITING;
     }
 
+    /**
+     * La partie opérative étant un Thread, cette fonction s'execute en boucle et représente l'automate d'execution.
+     */
     @Override
     public void run() {
-        while (current_action != Constante.Actions.EMERGENCY_STOP) {
+        while (state != Constante.State.EMERGENCY_STOP) {
 
             doAction(current_action);
 
             if (stop_next) {
                 try {
-                    unloading();
+                    if (!currentThread().isInterrupted()) {
+                        unloading();
+                    }
+                    else currentThread().interrupt();
                 } catch (InterruptedException e) {
                     currentThread().interrupt();
                 }
@@ -31,6 +37,10 @@ public class Operativ extends Thread {
         }
     }
 
+    /**
+     * Décharge les passagers de la cabine.
+     * @throws InterruptedException
+     */
     private void unloading() throws InterruptedException {
         setState(Constante.State.UNLOADING);
         Thread.sleep(2000);
@@ -64,14 +74,24 @@ public class Operativ extends Thread {
         setCurrent_action(action);
     }
 
+    /**
+     * Notifie le controlleur de commande que l'étage a changé.
+     */
     private void notifyFloorChange() {
         App.updateFloor(getCurrent_floor());
     }
 
+    /**
+     * Notifie le controlleur de commande que l'état a changé.
+     */
     private void notifyStateChange() {
         App.updateState(state);
     }
 
+    /**
+     * Execute une action si l'action courrante n'est pas WAITING.
+     * @param action
+     */
     public void doAction(int action) {
         if (action != Constante.Actions.WAITING) {
             setState(Constante.State.MOVING);
@@ -80,11 +100,20 @@ public class Operativ extends Thread {
             } catch (InterruptedException e) {
                 currentThread().interrupt();
             }
-            if (action == Constante.Actions.GO_DOWN) cab.goDown();
-            else if (action == Constante.Actions.GO_UP) cab.goUp();
+            if (!currentThread().isInterrupted()) {
+                if (action == Constante.Actions.GO_DOWN) cab.goDown();
+                else if (action == Constante.Actions.GO_UP) cab.goUp();
             notifyFloorChange();
+            }
+            else {
+                currentThread().interrupt();
+                App.setStateEmergencyStoped();
+            }
         }
-        else System.out.println();
+        else {
+            boolean test = currentThread().isInterrupted();
+            if (test) currentThread().interrupt();
+        }
     }
 
 }

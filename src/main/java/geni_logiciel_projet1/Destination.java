@@ -1,6 +1,6 @@
 package geni_logiciel_projet1;
 
-public class Destination {
+public class Destination implements Comparable<Destination>{
 
     private int destination_floor;
     private int direction;
@@ -16,5 +16,10 @@ public class Destination {
 
     public int getDirection() {
         return direction;
+    }
+
+    @Override
+    public int compareTo(Destination o) {
+        return Integer.compare(destination_floor, o.getDestination_floor());
     }
 }

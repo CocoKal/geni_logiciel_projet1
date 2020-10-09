@@ -18,6 +18,10 @@ public class DestinationList {
         return destinations_list.getFirst();
     }
 
+    public void setDestinations_list(LinkedList<Destination> destinations_list) {
+        this.destinations_list = destinations_list;
+    }
+
     public void removeFirst() {
         destinations_list.removeFirst();
     }
@@ -28,5 +32,9 @@ public class DestinationList {
 
     public void addDestination(Destination destination) {
         destinations_list.add(destination);
+    }
+
+    void sort(int action) {
+        setDestinations_list(SorterDestinationList.sort(destinations_list, action));
     }
 }
